@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 
 const dealershipCreatedSubscriber = new DealershipCreatedSubscriber(
   serviceBusClient,
-  'innovation-poc'
+  process.env.AZURE_SERVICE_BUS_SUBSCRIPTION_NAME || ''
 );
 
 dealershipCreatedSubscriber.subscribe(async (dealership) => {
