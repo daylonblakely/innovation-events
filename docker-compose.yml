@@ -14,4 +14,19 @@ services:
     ports:
       # forwarding: left side local host, right side docker container
       - 5000:5000
-      - 9229:9229 # for debugging
+      # - 9229:9229 # for debugging
+  subscriber_api:
+    build:
+      context: ./subscriber-api
+      dockerfile: Dockerfile.dev
+    env_file:
+      - .env
+    environment:
+      - DEV_PLATFORM=DOCKER
+    volumes:
+      - ./subscriber-api/src:/app/src
+      - /app/node_modules
+    ports:
+      # forwarding: left side local host, right side docker container
+      - 5001:5001
+      # - 9229:9229 # for debugging
