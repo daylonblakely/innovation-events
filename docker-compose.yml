@@ -44,3 +44,17 @@ services:
     ports:
       # forwarding: left side local host, right side docker container
       - 3000:3000
+  subscriber_client:
+    build:
+      context: ./subscriber-client
+      dockerfile: Dockerfile.dev
+    env_file:
+      - .env
+    environment:
+      - DEV_PLATFORM=DOCKER
+    volumes:
+      - ./subscriber-client:/app
+      - /app/node_modules
+    ports:
+      # forwarding: left side local host, right side docker container
+      - 3001:3001

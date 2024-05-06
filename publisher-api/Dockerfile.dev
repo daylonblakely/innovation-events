@@ -1,5 +1,5 @@
 # Use the official Node.js 20 Alpine image as the base image
-FROM node:20-alpine AS api
+FROM node:20-alpine AS publisher-api
 
 # Set the working directory to /app
 WORKDIR /app
