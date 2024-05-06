@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import { DealershipCreatedPublisher } from 'db-innovation-azure-events';
 import { serviceBusClient } from './service-bus-client';
 
@@ -10,6 +11,8 @@ const app = express();
 
 // request logging
 app.use(morgan('combined'));
+
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Publisher - Hello World!');
