@@ -30,3 +30,17 @@ services:
       # forwarding: left side local host, right side docker container
       - 5001:5001
       # - 9229:9229 # for debugging
+  publisher_client:
+    build:
+      context: ./publisher-client
+      dockerfile: Dockerfile.dev
+    env_file:
+      - .env
+    environment:
+      - DEV_PLATFORM=DOCKER
+    volumes:
+      - ./publisher-client:/app
+      - /app/node_modules
+    ports:
+      # forwarding: left side local host, right side docker container
+      - 3000:3000
