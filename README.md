@@ -47,3 +47,5 @@ This project consists of four applications that run in separate Docker container
 - Use the publisher client to publish events to the Azure Service Bus.
 - The subscriber API will automatically receive these events and send them to the subscriber client via a WebSocket connection.
 - The subscriber client will display the received events.
+
+![alt text](diagram.png)
