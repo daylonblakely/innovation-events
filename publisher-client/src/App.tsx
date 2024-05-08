@@ -1,3 +1,5 @@
+import BulkCreateDealerships from './BulkCreateDealerships';
+
 function App() {
   // send request to publisher API
   const handleClick = async () => {
@@ -27,6 +29,8 @@ function App() {
         <h1>Publisher Client</h1>
         <button onClick={handleClick}>Create Dealership</button>
       </div>
+      <br />
+      <BulkCreateDealerships />
     </>
   );
 }

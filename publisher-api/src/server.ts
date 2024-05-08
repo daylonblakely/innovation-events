@@ -2,7 +2,10 @@ import 'dotenv/config';
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import { DealershipCreatedPublisher } from 'db-innovation-azure-events';
+import {
+  DealershipCreatedPublisher,
+  DealershipCreatedEvent,
+} from 'db-innovation-azure-events';
 import { serviceBusClient } from './service-bus-client';
 
 const PORT = 5000;
@@ -18,22 +21,35 @@ app.get('/', (req, res) => {
   res.send('Publisher - Hello World!');
 });
 
-app.post('/dealerships', async (req, res) => {
+const dealershipCreatedPublisher = new DealershipCreatedPublisher(
+  serviceBusClient
+);
+
+const publishDealership = (storeNumber: number) => {
+  const dealership: DealershipCreatedEvent['data'] = {
+    storeName: 'Test Store',
+    storeNumber,
+  };
+
+  dealershipCreatedPublisher.publish(dealership);
+};
+
+app.post('/dealerships', (req, res) => {
   const min = 1;
   const max = 1000;
 
-  const dealership = {
-    storeName: 'Test Store',
-    storeNumber: Math.floor(Math.random() * (max - min + 1)) + min,
-  };
-
-  const dealershipCreatedPublisher = new DealershipCreatedPublisher(
-    serviceBusClient
-  );
-
-  dealershipCreatedPublisher.publish(dealership);
+  publishDealership(Math.floor(Math.random() * (max - min + 1)) + min);
 
   res.send('Dealership created');
+});
+
+app.post('/dealerships/bulk', (req, res) => {
+  const count = parseInt(req.query.count?.toString() || '') || 10;
+
+  for (let i = 0; i < count; i++) {
+    publishDealership(i);
+  }
+  res.send();
 });
 
 app.listen(PORT, () => {
