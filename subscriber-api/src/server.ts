@@ -37,7 +37,7 @@ const dealershipCreatedSubscriber = new DealershipCreatedSubscriber(
 const wss = new WebSocket.Server({ noServer: true });
 
 dealershipCreatedSubscriber.subscribe(async (dealership) => {
-  // console.log(dealership);
+  console.log('Received dealership created event:', dealership);
   dealershipsData.push(dealership);
 
   // Broadcast the new dealership data to all connected WebSocket clients

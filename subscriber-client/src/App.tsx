@@ -7,6 +7,12 @@ function App() {
   >([]);
 
   useEffect(() => {
+    // Fetch dealerships on initial render
+    fetch('http://localhost:5001/dealerships')
+      .then((response) => response.json())
+      .then((data) => setDealerships(data))
+      .catch((error) => console.error('Error:', error));
+
     const ws = new WebSocket('ws://localhost:5001');
 
     ws.onopen = () => {
